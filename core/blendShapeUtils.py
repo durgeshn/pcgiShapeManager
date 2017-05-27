@@ -30,7 +30,7 @@ def decompileNames(passedName, pattern):
     tmp = passedName.replace(prefix, '')
     tmp = tmp.split('_')
     tmp.insert(0, prefix)
-    retDict = {}
+    retDict = dict()
     retDict['#prefix'] = prefix
     if len(mainPattern) != len(tmp):
         return False, {}
@@ -46,9 +46,8 @@ def addBlendShapeNodes(baseMesh, shapeList=list()):
 
 def addIntermidiateBlendShapes(blendShapeNode, baseMesh, mainShape, intermidiatePattern, intermidiateShapeList=list()):
     blendShapeNode = pm.PyNode(blendShapeNode)
-    weightCount = len(blendShapeNode.listAttr(m=True, k=True)) -1
+    weightCount = len(blendShapeNode.listAttr(m=True, k=True)) - 1
     pm.blendShape(blendShapeNode, e=1, t=(baseMesh, weightCount, mainShape, 1))
     for each in intermidiateShapeList:
         ret = decompileNames(each, intermidiatePattern)
-        # print (float(ret[1]['#value'])/100), each, baseMesh, weightCount, blendShapeNode, '<-----------------------------'
         pm.blendShape(blendShapeNode, e=1, ib=1, t=(baseMesh, weightCount, each, float(ret[1]['#value'])/100))
