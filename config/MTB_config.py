@@ -45,7 +45,6 @@ facialConnectionsDict = {
     'Smile2' :'body_fac_mouth_opensmile_M',
     'Smile1':'body_fac_mouth_Smile_M',
 
-
     'lwr_teeth_clench' : '',
     'upr_teeth_clench' : '',
     'mouthopen' : '',
@@ -81,7 +80,6 @@ facialConnectionsDict = {
     'r_cnr_xPlus' : 'body_fac_lip_cnrout_R',
     'r_cnr_xMin' : 'body_fac_lip_cnrin_R',
 
-
     'upr_teeth_clench_mov_xPlus' : '',
     'lwr_teeth_clench_mov_xPlus' : '',
     'upr_teeth_clench_mov_xMin' : '',
@@ -94,7 +92,6 @@ facialConnectionsDict = {
 
     'mouthbnk_xPlus' : 'body_fac_mouth_bank_L',
     'mouthbnk_xMin' : 'body_fac_mouth_bank_R',
-
 
     'face_mouth_slide_fac_ctl_upLt' : '',
     'face_mouth_slide_fac_ctl_dnRt' : '',
@@ -110,5 +107,4 @@ facialConnectionsDict = {
     'face_l_cnr_fac_ctl_dnRt' : '',
     'face_l_cnr_fac_ctl_upRt' : '',
     'face_l_cnr_fac_ctl_dnLt' : ''
-
 }
