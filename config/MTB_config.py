@@ -64,7 +64,6 @@ facialConnectionsDict = {
     'mouth_slide_xPlus' : '',
     'mouth_slide_xMin' : '',
 
-
     'l_brow_yPlus' : '',
     'l_brow_yMin' : '',
     'r_brow_yPlus' : '',
