@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'D:\user\durgesh.n\workspace\pcgiShapeManager\ui\pcgiShapeManegerUI.ui'
 #
-# Created: Fri May 26 16:23:17 2017
+# Created: Mon May 29 13:07:24 2017
 #      by: pyside-uic 0.2.14 running on PySide 1.2.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -69,6 +69,38 @@ class Ui_MainWindow(object):
         self.mainShapes_tw.setObjectName("mainShapes_tw")
         self.mainShapes_tw.headerItem().setText(0, "1")
         self.verticalLayout.addWidget(self.mainShapes_tw)
+        self.horizontalLayout_6 = QtGui.QHBoxLayout()
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.label = QtGui.QLabel(self.centralwidget)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+        self.label.setSizePolicy(sizePolicy)
+        self.label.setMinimumSize(QtCore.QSize(70, 20))
+        self.label.setMaximumSize(QtCore.QSize(70, 20))
+        self.label.setObjectName("label")
+        self.horizontalLayout_6.addWidget(self.label)
+        self.facialUI_cb = QtGui.QComboBox(self.centralwidget)
+        self.facialUI_cb.setObjectName("facialUI_cb")
+        self.horizontalLayout_6.addWidget(self.facialUI_cb)
+        self.verticalLayout.addLayout(self.horizontalLayout_6)
+        self.horizontalLayout = QtGui.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.label_2 = QtGui.QLabel(self.centralwidget)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
+        self.label_2.setSizePolicy(sizePolicy)
+        self.label_2.setMinimumSize(QtCore.QSize(70, 20))
+        self.label_2.setMaximumSize(QtCore.QSize(70, 20))
+        self.label_2.setObjectName("label_2")
+        self.horizontalLayout.addWidget(self.label_2)
+        self.facialConfig_cb = QtGui.QComboBox(self.centralwidget)
+        self.facialConfig_cb.setObjectName("facialConfig_cb")
+        self.horizontalLayout.addWidget(self.facialConfig_cb)
+        self.verticalLayout.addLayout(self.horizontalLayout)
         self.horizontalLayout_5 = QtGui.QHBoxLayout()
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.addShapes_b = QtGui.QToolButton(self.centralwidget)
@@ -130,6 +162,8 @@ class Ui_MainWindow(object):
         self.mainfileter_le.setPlaceholderText(QtGui.QApplication.translate("MainWindow", "*Filters*", None, QtGui.QApplication.UnicodeUTF8))
         self.interFileter_le.setPlaceholderText(QtGui.QApplication.translate("MainWindow", "*Filters*", None, QtGui.QApplication.UnicodeUTF8))
         self.loadShapes_tb.setText(QtGui.QApplication.translate("MainWindow", "loadShapes", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("MainWindow", "Facial UI :", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Facial Config : ", None, QtGui.QApplication.UnicodeUTF8))
         self.addShapes_b.setText(QtGui.QApplication.translate("MainWindow", "addShapes", None, QtGui.QApplication.UnicodeUTF8))
         self.mirrorShapes_b.setText(QtGui.QApplication.translate("MainWindow", "mirrorShapes", None, QtGui.QApplication.UnicodeUTF8))
         self.makeConnections_b.setText(QtGui.QApplication.translate("MainWindow", "makeConnections", None, QtGui.QApplication.UnicodeUTF8))

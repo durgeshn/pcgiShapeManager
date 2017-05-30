@@ -41,7 +41,7 @@ def decompileNames(passedName, pattern):
 
 
 def addBlendShapeNodes(baseMesh, shapeList=list()):
-    return pm.blendShape(shapeList, baseMesh, n='%s_blendShapeNode' % baseMesh)
+    return pm.blendShape(shapeList, baseMesh, n='%s_blendShapeNode' % baseMesh)[0]
 
 
 def addIntermidiateBlendShapes(blendShapeNode, baseMesh, mainShape, intermidiatePattern, intermidiateShapeList=list()):
@@ -50,4 +50,4 @@ def addIntermidiateBlendShapes(blendShapeNode, baseMesh, mainShape, intermidiate
     pm.blendShape(blendShapeNode, e=1, t=(baseMesh, weightCount, mainShape, 1))
     for each in intermidiateShapeList:
         ret = decompileNames(each, intermidiatePattern)
-        pm.blendShape(blendShapeNode, e=1, ib=1, t=(baseMesh, weightCount, each, float(ret[1]['#value'])/100))
+        pm.blendShape(blendShapeNode, e=1, ib=1, t=(baseMesh, weightCount, each, float(ret[1]['#value']) / 100))
