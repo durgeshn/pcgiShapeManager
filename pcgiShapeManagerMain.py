@@ -77,7 +77,8 @@ class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManeger
             self.makeBasicNodes()
 
     def makeBasicNodes(self):
-        baseMesh = self.baseMeshName_le.text()
+        # baseMesh = self.baseMeshName_le.text()
+        print self.baseMesh
         if not pm.objExists('BM_nodes'):
             bmNode = pm.group(n='BM_nodes', em=1)
             bmNode.addAttr('guiimport', at='bool', k=1)
@@ -135,14 +136,18 @@ class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManeger
             shapeName = itm.text(0)
             # print shapeName, itm.childCount()
             if itm.childCount() > 0:
-                interMidiateShapes = list()
+                intermediateShapes = list()
                 for eachChild in range(0, itm.childCount()):
                     childItem = itm.child(eachChild)
-                    interMidiateShapes.append(childItem.text(0))
+                    intermediateShapes.append(childItem.text(0))
                 # print 'Adding IntermediateShapes for %s with [%s]' % (shapeName, ','.join(interMidiateShapes))
-                interMediateShapesDict[shapeName] = interMidiateShapes
+                interMediateShapesDict[shapeName] = intermediateShapes
             else:
                 allShapes.append(shapeName)
+
+        # remove the already existing blendshape node.
+        if pm.objExists('%s_blendShapeNode' % self.baseMesh):
+            pm.delete('%s_blendShapeNode' % self.baseMesh)
 
         self.blendShapeNode = blendShapeUtils.addBlendShapeNodes(self.baseMeshShapeNode, allShapes)
         print self.blendShapeNode, '<------------------------------'
@@ -191,7 +196,7 @@ def mayaMainWindow():
     """
     # noinspection PyArgumentList
     mainWindowPointer = omui.MQtUtil.mainWindow()
-    return wrapInstance(long(mainWindowPointer), QtGui.QWidget)
+    return wrapInstance(mainWindowPointer, QtGui.QWidget)
 
 
 def main():
