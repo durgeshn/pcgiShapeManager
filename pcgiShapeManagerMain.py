@@ -5,9 +5,12 @@ import importlib
 # Qt related imports.
 from PySide import QtGui
 from PySide import QtCore
+from shiboken import wrapInstance
 
 # maya related imports.
 import pymel.core as pm
+import maya.OpenMayaUI as omui
+from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
 
 # custom imports.
 from ui import pcgiShapeManegerUI
@@ -17,7 +20,7 @@ reload(pcgiShapeManegerUI)
 reload(blendShapeUtils)
 
 
-class ShapeManager(QtGui.QMainWindow, pcgiShapeManegerUI.Ui_MainWindow):
+class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManegerUI.Ui_MainWindow):
     def __init__(self, prnt=None):
         super(ShapeManager, self).__init__(prnt)
         self.baseMesh = None
@@ -75,12 +78,6 @@ class ShapeManager(QtGui.QMainWindow, pcgiShapeManegerUI.Ui_MainWindow):
 
     def makeBasicNodes(self):
         baseMesh = self.baseMeshName_le.text()
-        # if pm.objExists("{0}_shapes_Grp".format(baseMesh)):
-        #     return True
-        # topGrp = pm.group(n="{0}_shapes_Grp".format(baseMesh), em=1)
-        # pm.parent(pm.group(n="{0}_All_blends_Grp".format(baseMesh), em=1), topGrp)
-        # pm.parent(pm.group(n="{0}_Xtra_shapes".format(baseMesh), em=1), topGrp)
-        # pm.parent(pm.group(n="{0}_Inbetween_shapes".format(baseMesh), em=1), topGrp)
         if not pm.objExists('BM_nodes'):
             bmNode = pm.group(n='BM_nodes', em=1)
             bmNode.addAttr('guiimport', at='bool', k=1)
@@ -150,7 +147,8 @@ class ShapeManager(QtGui.QMainWindow, pcgiShapeManegerUI.Ui_MainWindow):
         self.blendShapeNode = blendShapeUtils.addBlendShapeNodes(self.baseMeshShapeNode, allShapes)
         print self.blendShapeNode, '<------------------------------'
         for key, val in interMediateShapesDict.iteritems():
-            blendShapeUtils.addIntermidiateBlendShapes(self.blendShapeNode, self.baseMeshShapeNode, key, self.interFileter_le.text(),
+            blendShapeUtils.addIntermidiateBlendShapes(self.blendShapeNode, self.baseMeshShapeNode, key,
+                                                       self.interFileter_le.text(),
                                                        val)
 
     def makeUIConnections(self):
@@ -179,9 +177,21 @@ class ShapeManager(QtGui.QMainWindow, pcgiShapeManegerUI.Ui_MainWindow):
             print '%s.%s' % (self.blendShapeNode, val), '<------------------------------------------'
             if pm.objExists('%s.%s' % (self.blendShapeNode, val)):
                 if val:
-                    print '%s.%s' % (str(mainController), key), '------------------------>>>>>', '%s.%s' % (self.blendShapeNode, val)
+                    print '%s.%s' % (str(mainController), key), '------------------------>>>>>', '%s.%s' % (
+                        self.blendShapeNode, val)
                     pm.connectAttr('%s.%s' % (str(mainController), key), '%s.%s' % (self.blendShapeNode, val))
 
+
+# Get maya main window as Qt wrapped instance.
+def mayaMainWindow():
+    """
+    This is to get the maya window QT pointer.
+    :return:
+    :rtype:
+    """
+    # noinspection PyArgumentList
+    mainWindowPointer = omui.MQtUtil.mainWindow()
+    return wrapInstance(long(mainWindowPointer), QtGui.QWidget)
 
 
 def main():

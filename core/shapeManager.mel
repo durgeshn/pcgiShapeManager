@@ -1,0 +1,31 @@
+global proc domirror()
+{
+string $selshape[]=`textScrollList -q -si "mirrorshapelist"` ;
+unlockrelated;
+string $tempbasestring=`textField -q -text "basemeshfld"`;
+select -r $tempbasestring;
+pratSymCtl("sbgBn");
+select -cl;
+for ($selshap in $selshape)
+{
+select -add $selshap;
+select -add `ls -tr ($selshap +"_IB*")`;
+}
+string $mirrorshapes[]=`ls -sl`;
+for ($mirrorshape in $mirrorshapes)
+{
+//duplicate the selected shape rename it and mirror it in ZY
+string $tempblendstring=`textField -q -text "blendnodefld"`;
+select -r $mirrorshape;
+string $parentgrp[]=`pickWalk -d up`;
+setAttr ($tempblendstring+".envelope") 0;
+string $newname=`substitute "_L_" $mirrorshape "_R_"`;
+string $mirdup[]=`duplicate -rr -n $newname $mirrorshape`;
+//parent $mirdup[0] $parentgrp[0];
+select -r $mirdup[0];
+pratSymCtl ("fsBn");
+}
+addmirroredshapes;
+string $tempblendstring=`textField -q -text "blendnodefld"`;
+setAttr ($tempblendstring+".envelope") 1;
+}
