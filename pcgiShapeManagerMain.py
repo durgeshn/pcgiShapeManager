@@ -189,12 +189,23 @@ class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManeger
         reload(baseConfig)
 
         mainController = pm.PyNode('face_facial_ctl')
+        usedShapes = list()
         for key, val in baseConfig.facialConnectionsDict.iteritems():
             if val:
                 shapeToConnect = None
                 for eachShape in shapeList:
                     if val in eachShape:
+                        usedShapes.append(eachShape)
                         pm.connectAttr('%s.%s' % (str(mainController), key), '%s.%s' % (self.blendShapeNode, eachShape))
+
+        extraShapes = set(shapeList) - set(usedShapes)
+        for eachExtraShape in extraShapes:
+            attrName = '_'.join(eachExtraShape.split('_')[-2:])
+            extraShapeCtl = pm.PyNode('face_extrashapes_fac_ctl')
+            extraShapeCtl.addAttr(attrName, at='float', min=0, max=1, dv=0, k=1)
+            pm.connectAttr('%s.%s' % (extraShapeCtl, attrName), '%s.%s' % (self.blendShapeNode, eachExtraShape))
+
+
 
 
 # Get maya main window as Qt wrapped instance.
