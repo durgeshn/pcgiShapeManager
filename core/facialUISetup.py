@@ -14,7 +14,8 @@ directConnections = ['face_Fv_fac_ctl', 'face_MBP_fac_ctl', 'face_r_eye_popout_f
                      'face_r_sneerup_fac_ctl', 'face_CDGK_fac_ctl',
                      'face_l_brow_agr_fac_ctl', 'face_l_brow_sad_fac_ctl', 'face_l_sneerup_fac_ctl', 'face_U_fac_ctl',
                      'face_l_sneerdown_fac_ctl', 'face_lwr_teeth_clench_fac_ctl', 'face_upr_teeth_clench_fac_ctl',
-                    'face_l_cheek_puff_fac_ctl', 'face_mouthopen_fac_ctl', 'face_Smile1_fac_ctl', 'face_Smile2_fac_ctl']
+                    'face_l_cheek_puff_fac_ctl', 'face_mouthopen_fac_ctl', 'face_Smile1_fac_ctl', 'face_Smile2_fac_ctl',
+                     'face_r_cheek_puff_fac_ctl']
 
 for eachConnection in directConnections:
     connectionName = (eachConnection.replace('face_', '')).replace('_fac_ctl', '')
@@ -85,7 +86,7 @@ for each in ['face_mouth_slide_fac_ctl', 'face_r_cnr_fac_ctl', 'face_l_cnr_fac_c
     controller = pm.PyNode(each)
     controllerGroup = controller.listRelatives(p=True)
     for key, val in {'upLt': (1, 1), 'dnLt': (1, -1), 'dnRt': (-1, -1), 'upRt': (-1, 1)}.iteritems():
-        connectionName = '%s_%s' % (controller, key)
+        connectionName = '%s_%s' % ((each.replace('face_', '')).replace('_fac_ctl', ''), key)
         mainController.addAttr(connectionName, at='double', min=0, max=1, dv=0)
         loc = pm.spaceLocator(n='%sLoc_%s_Corrrective' % (key, controller))
         pm.parent(loc, controllerGroup[0])

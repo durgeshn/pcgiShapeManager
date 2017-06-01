@@ -17,6 +17,7 @@
           <option value="pymel.core.objExists" />
           <option value="pymel.core.nodetypes.BlendShape" />
           <option value="pymel.core.blendShape" />
+          <option value="pymel.core.listAttr" />
         </list>
       </option>
     </inspection_tool>

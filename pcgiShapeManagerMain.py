@@ -98,7 +98,14 @@ class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManeger
         '_'.join(tmp[:numberOfPlaceHolders - 1])
 
         mayaFilter = '%s%s' % ('_'.join(tmp[:numberOfPlaceHolders - 1]), '_*' * numberOfPlaceHolders)
-        allBlendShapeNodes = pm.ls(mayaFilter, type='transform')
+        listAllBlendShapeNodes = pm.ls(mayaFilter, type='mesh')
+        allBlendShapeNodes = list()
+        for x in listAllBlendShapeNodes:
+            trNode = x.listRelatives(p=1)[0]
+            if trNode not in allBlendShapeNodes:
+                allBlendShapeNodes.append(trNode)
+
+
         intermediateShapes = list()
         for eachShape in allBlendShapeNodes:
             if not blendShapeUtils.hasNumeric(str(eachShape)):
@@ -146,11 +153,11 @@ class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManeger
                 allShapes.append(shapeName)
 
         # remove the already existing blendshape node.
-        if pm.objExists('%s_blendShapeNode' % self.baseMesh):
-            pm.delete('%s_blendShapeNode' % self.baseMesh)
+        if pm.objExists('%s_blendShapeNode' % self.baseMeshShapeNode):
+            pm.delete('%s_blendShapeNode' % self.baseMeshShapeNode)
 
         self.blendShapeNode = blendShapeUtils.addBlendShapeNodes(self.baseMeshShapeNode, allShapes)
-        print self.blendShapeNode, '<------------------------------'
+        # print self.blendShapeNode, '<------------------------------'
         for key, val in interMediateShapesDict.iteritems():
             blendShapeUtils.addIntermidiateBlendShapes(self.blendShapeNode, self.baseMeshShapeNode, key,
                                                        self.interFileter_le.text(),
@@ -171,6 +178,10 @@ class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManeger
             pm.importFile(facialFilePath)
             bmNode.guiimport.set(1)
 
+        # get blendshape list from the blendShapeNode.
+        blendShapeNode = pm.PyNode('%s_blendShapeNode' % self.baseMeshShapeNode)
+        shapeList = pm.listAttr(blendShapeNode + '*.w', m=1, k=1)
+
         # Now read the config and make the connections...
         configFile = self.facialConfig_cb.currentText().replace('.py', '')
         importStatement = "pcgiShapeManager.config.%s" % configFile
@@ -179,12 +190,11 @@ class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManeger
 
         mainController = pm.PyNode('face_facial_ctl')
         for key, val in baseConfig.facialConnectionsDict.iteritems():
-            print '%s.%s' % (self.blendShapeNode, val), '<------------------------------------------'
-            if pm.objExists('%s.%s' % (self.blendShapeNode, val)):
-                if val:
-                    print '%s.%s' % (str(mainController), key), '------------------------>>>>>', '%s.%s' % (
-                        self.blendShapeNode, val)
-                    pm.connectAttr('%s.%s' % (str(mainController), key), '%s.%s' % (self.blendShapeNode, val))
+            if val:
+                shapeToConnect = None
+                for eachShape in shapeList:
+                    if val in eachShape:
+                        pm.connectAttr('%s.%s' % (str(mainController), key), '%s.%s' % (self.blendShapeNode, eachShape))
 
 
 # Get maya main window as Qt wrapped instance.
@@ -196,7 +206,7 @@ def mayaMainWindow():
     """
     # noinspection PyArgumentList
     mainWindowPointer = omui.MQtUtil.mainWindow()
-    return wrapInstance(mainWindowPointer, QtGui.QWidget)
+    return wrapInstance(long(mainWindowPointer), QtGui.QWidget)
 
 
 def main():
