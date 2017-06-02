@@ -20,6 +20,29 @@ reload(pcgiShapeManegerUI)
 reload(blendShapeUtils)
 
 
+def mainFilerCompleterData(model):
+    """
+    For auto completion of the main filter.
+    Returns:
+
+    """
+    model.setStringList(
+        ['body_fac_#part_#shape_#side', 'upper_teeth_fac_#part_#shape_#side', 'lower_teeth_fac_#part_#shape_#side',
+         'eye_#part_#shape_#side'])
+
+
+def intermediateFilerCompleterData(model):
+    """
+    For auto completion of the intermediate filter.
+    Returns:
+
+    """
+    model.setStringList(
+        ['body_fac_#part_#shape_#value_#side', 'upper_teeth_fac_#part_#shape_#value_#side',
+         'lower_teeth_fac_#part_#shape_#value_#side',
+         'eye_#part_#shape_#value_#side'])
+
+
 class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManegerUI.Ui_MainWindow):
     """
     This the main module for adding blendshapes to the character. This uses a config for the possible blendshape nodes.
@@ -36,8 +59,18 @@ class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManeger
         self.makeConnections()
         self.mainShapes_tw.setHeaderLabel('Shapes')
 
-        self.mainfileter_le.setText('body_fac_#part_#shape_#side')
-        self.interFileter_le.setText('body_fac_#part_#shape_#value_#side')
+        mainFilterCompleter = QtGui.QCompleter()
+        self.mainfileter_le.setCompleter(mainFilterCompleter)
+        mainFileterModel = QtGui.QStringListModel()
+        mainFilterCompleter.setModel(mainFileterModel)
+        mainFilerCompleterData(mainFileterModel)
+
+        intermediateFilterCompleter = QtGui.QCompleter()
+        self.interFileter_le.setCompleter(intermediateFilterCompleter)
+        intermediateFilterModel = QtGui.QStringListModel()
+        intermediateFilterCompleter.setModel(intermediateFilterModel)
+        intermediateFilerCompleterData(intermediateFilterModel)
+
         self.updateFacialUI()
         self.updateFacialConfig()
 
@@ -261,10 +294,14 @@ class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManeger
 
         extraShapes = set(shapeList) - set(usedShapes)
         for eachExtraShape in extraShapes:
-            attrName = '_'.join(eachExtraShape.split('_')[-2:])
-            extraShapeCtl = pm.PyNode('face_extrashapes_fac_ctl')
-            extraShapeCtl.addAttr(attrName, at='float', min=0, max=1, dv=0, k=1)
-            pm.connectAttr('%s.%s' % (extraShapeCtl, attrName), '%s.%s' % (self.blendShapeNode, eachExtraShape))
+            if 'pupil' in eachExtraShape:
+                ret = blendShapeUtils.decompileNames(eachExtraShape, str(self.mainfileter_le.text()))
+                pm.connectAttr('face_r_pupil_fac_ctl.%s' % (ret['#shape']), '%s.%s' % (self.blendShapeNode, eachExtraShape))
+            else:
+                attrName = '_'.join(eachExtraShape.split('_')[-2:])
+                extraShapeCtl = pm.PyNode('face_extrashapes_fac_ctl')
+                extraShapeCtl.addAttr(attrName, at='float', min=0, max=1, dv=0, k=1)
+                pm.connectAttr('%s.%s' % (extraShapeCtl, attrName), '%s.%s' % (self.blendShapeNode, eachExtraShape))
 
 
 # Get maya main window as Qt wrapped instance.
