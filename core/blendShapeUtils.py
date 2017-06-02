@@ -2,6 +2,11 @@ import pymel.core as pm
 
 
 def getShapeNode(passedObject):
+    """
+    This gets the shapeNodes name
+    Returns:
+
+    """
     objNode = pm.PyNode(passedObject)
     if type(objNode) == pm.nodetypes.Mesh:
         return objNode
@@ -10,6 +15,11 @@ def getShapeNode(passedObject):
 
 
 def getBlendShapeNode(passedObject):
+    """
+    This gets the blendShape node.  
+    Returns:
+
+    """
     shapeNode = getShapeNode(passedObject)
     blendShapeNodes = [x for x in shapeNode.listHistory(pdo=1) if type(x) == pm.nodetypes.BlendShape]
     if len(blendShapeNodes):
@@ -18,10 +28,20 @@ def getBlendShapeNode(passedObject):
 
 
 def hasNumeric(inputString):
+    """
+    This checks for the string for any numeric values.
+    Returns:
+
+    """
     return any(char.isdigit() for char in inputString)
 
 
 def decompileNames(passedName, pattern):
+    """
+    Splits the passed name with the filters and give them back,
+    Returns:
+
+    """
     # passedName = 'body_fac_#part_#shape_#side'
     patterns = pattern.split('_')
     prefix = pattern.split('#')[0]
@@ -41,10 +61,20 @@ def decompileNames(passedName, pattern):
 
 
 def addBlendShapeNodes(baseMesh, shapeList=list()):
+    """
+    This adds the list of blendShapes to the main mesh.
+    Returns:
+
+    """
     return pm.blendShape(shapeList, baseMesh, n='%s_blendShapeNode' % baseMesh)[0]
 
 
 def addIntermidiateBlendShapes(blendShapeNode, baseMesh, mainShape, intermidiatePattern, intermidiateShapeList=list()):
+    """
+    This adds the intermediate shapes to the baseMesh.
+    Returns:
+
+    """
     blendShapeNode = pm.PyNode(blendShapeNode)
     weightCount = len(blendShapeNode.listAttr(m=True, k=True)) - 1
     pm.blendShape(blendShapeNode, e=1, t=(baseMesh, weightCount, mainShape, 1))

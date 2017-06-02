@@ -1,3 +1,8 @@
+"""
+This here is only needed for the facial UI.
+This creates attributes with the name of the controllers and then connects them to the controllers.
+Which can latter be used for the blendShapes.
+"""
 import pymel.core as pm
 
 mainController = pm.PyNode('face_facial_ctl')
@@ -56,6 +61,7 @@ biDirectionConectionsX = ['face_upr_teeth_clench_mov_fac_ctl', 'face_lwr_teeth_c
                           'face_l_lip_pinch_fac_ctl', 'face_r_lip_pinch_fac_ctl', 'face_mouthbnk_fac_ctl',
                           'face_mouth_slide_fac_ctl', 'face_r_cnr_fac_ctl', 'face_l_cnr_fac_ctl']
 
+directionalList = [('X', 1, 1), ('X', 1, 0)]
 
 yPlus = 0
 yMin = 0

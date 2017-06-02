@@ -21,6 +21,10 @@ reload(blendShapeUtils)
 
 
 class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManegerUI.Ui_MainWindow):
+    """
+    This the main module for adding blendshapes to the character. This uses a config for the possible blendshape nodes.
+    """
+
     def __init__(self, prnt=None):
         super(ShapeManager, self).__init__(prnt)
         self.baseMesh = None
@@ -38,29 +42,47 @@ class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManeger
         self.updateFacialConfig()
 
     def makeConnections(self):
+        """
+        Make all the UI related connections here.
+        Returns:
+
+        """
         self.selectBaseMesh_tb.clicked.connect(self.selectBaseMesh)
         self.addShapes_b.clicked.connect(self.addShapes)
         self.loadShapes_tb.clicked.connect(self.loadShapes)
         self.makeConnections_b.clicked.connect(self.makeUIConnections)
 
     def updateFacialUI(self):
+        """
+        This checks the config location for all the valid facialUI (only ".ma") files. And put them in a combobox for 
+        artists to choose.
+        Returns:
+
+        """
         rootPath = __file__
         self.facialFileLocation = os.path.join(os.path.dirname(rootPath), 'config/facialUI').replace('\\', '/')
         self.configLocation = os.path.join(os.path.dirname(rootPath), 'config').replace('\\', '/')
-        # get only the maya files.
-        # facialUIs = [x for x in os.listdir(facialUILocation) if x.endswith('.mb') or x.endswith('.ma')]
-        # taking only the maya ascii files.
         facialUIs = [x for x in os.listdir(self.facialFileLocation) if x.endswith('.ma')]
         facialUIs.insert(0, 'Select Facial UI.')
         self.facialUI_cb.addItems(facialUIs)
 
     def updateFacialConfig(self):
+        """
+        This check the config location for all the valid config files and loads them into the combobox.
+        Returns:
+
+        """
         self.facialConfig_cb.addItem('Select a config file')
         for each in os.listdir(self.configLocation):
             if not each.startswith('__') and each.endswith('.py'):
                 self.facialConfig_cb.addItem(each)
 
     def selectBaseMesh(self):
+        """
+        This stores the baseMesh and some of it's attributes. Make some necessary groups for the modeule.
+        Returns:
+
+        """
         sel = pm.ls(sl=1)
         if not len(sel) or len(sel) > 1:
             raise RuntimeError(
@@ -73,10 +95,35 @@ class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManeger
         self.baseMeshShapeNode = shapeNode
         self.baseMeshShape_le.setText(str(shapeNode))
 
+        # make the base shape groups.
+        self.makeBaseGrps()
         if not pm.objExists('BM_nodes'):
             self.makeBasicNodes()
 
+    def makeBaseGrps(self):
+        """
+        This makes the necessary groups for the modeule.
+        Returns:
+
+        """
+        # make main shpaeGrp.
+        if not pm.objExists('Shapes_Grp'):
+            pm.group(em=1, n='Shapes_Grp')
+        # make baseMeshShapeGrp.
+        baseMeshShapeGrp = '%s_shapesGrp' % self.baseMesh
+        if not pm.objExists(baseMeshShapeGrp):
+            pm.group(em=1, n=baseMeshShapeGrp, p='Shapes_Grp')
+            # make the other grps and prent them to the baseShapeGrp.
+            pm.group(em=1, n='%s_allBlendsGrp' % self.baseMesh, p=baseMeshShapeGrp)
+            pm.group(em=1, n='%s_xtraShapesGrp' % self.baseMesh, p=baseMeshShapeGrp)
+            pm.group(em=1, n='%s_inbetweenShapesGrp' % self.baseMesh, p=baseMeshShapeGrp)
+
     def makeBasicNodes(self):
+        """
+        This makes the BM_node which is latter used for checking the facial UI present in the scene or not.
+        Returns:
+
+        """
         # baseMesh = self.baseMeshName_le.text()
         print self.baseMesh
         if not pm.objExists('BM_nodes'):
@@ -86,6 +133,11 @@ class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManeger
         pm.select(cl=1)
 
     def loadShapes(self):
+        """
+        This takes the filters and checks all the mesh shapes for possible blendShapes and loads them into the list.
+        Returns:
+
+        """
         self.mainShapes_tw.clear()
         baseFilter = self.mainfileter_le.text()
         interFilter = self.interFileter_le.text()
@@ -104,7 +156,6 @@ class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManeger
             trNode = x.listRelatives(p=1)[0]
             if trNode not in allBlendShapeNodes:
                 allBlendShapeNodes.append(trNode)
-
 
         intermediateShapes = list()
         for eachShape in allBlendShapeNodes:
@@ -135,6 +186,11 @@ class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManeger
                     newItem.setText(0, str(each))
 
     def addShapes(self):
+        """
+        This here adds the shapes to the baseMesh with the in-between.
+        Returns:
+
+        """
         allShapesCount = self.mainShapes_tw.topLevelItemCount()
         allShapes = list()
         interMediateShapesDict = dict()
@@ -164,15 +220,20 @@ class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManeger
                                                        val)
 
     def makeUIConnections(self):
+        """
+        Connects the facial UI to the blendShapes.
+        Returns:
+
+        """
         print 'Making connections for the shapes to the UI...'
         bmNode = pm.PyNode('BM_nodes')
         if not bmNode.objExists():
-            pm.displayError('Missing %s, Please check and try again.' % bmNode)
+            pm.error('Missing %s, Please check and try again.' % bmNode)
             return False
         if not bmNode.guiimport.get():
             facialFile = self.facialUI_cb.currentText()
             if not facialFile:
-                pm.displayError('Please select a proper facial file.')
+                pm.error('Please select a proper facial file.')
                 return False
             facialFilePath = os.path.join(self.facialFileLocation, str(facialFile)).replace('\\', '/')
             pm.importFile(facialFilePath)
@@ -192,7 +253,7 @@ class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManeger
         usedShapes = list()
         for key, val in baseConfig.facialConnectionsDict.iteritems():
             if val:
-                shapeToConnect = None
+                # shapeToConnect = None
                 for eachShape in shapeList:
                     if val in eachShape:
                         usedShapes.append(eachShape)
@@ -204,8 +265,6 @@ class ShapeManager(MayaQWidgetDockableMixin, QtGui.QMainWindow, pcgiShapeManeger
             extraShapeCtl = pm.PyNode('face_extrashapes_fac_ctl')
             extraShapeCtl.addAttr(attrName, at='float', min=0, max=1, dv=0, k=1)
             pm.connectAttr('%s.%s' % (extraShapeCtl, attrName), '%s.%s' % (self.blendShapeNode, eachExtraShape))
-
-
 
 
 # Get maya main window as Qt wrapped instance.

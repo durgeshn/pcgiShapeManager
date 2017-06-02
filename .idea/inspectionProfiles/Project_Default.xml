@@ -18,6 +18,7 @@
           <option value="pymel.core.nodetypes.BlendShape" />
           <option value="pymel.core.blendShape" />
           <option value="pymel.core.listAttr" />
+          <option value="pymel.core.error" />
         </list>
       </option>
     </inspection_tool>

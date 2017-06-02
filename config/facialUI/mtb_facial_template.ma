@@ -1,6 +1,6 @@
 //Maya ASCII 2015 scene
 //Name: mtb_facial_template.ma
-//Last modified: Thu, Jun 01, 2017 06:06:03 PM
+//Last modified: Thu, Jun 01, 2017 06:48:06 PM
 //Codeset: 1252
 requires maya "2015";
 requires -nodeType "mentalrayFramebuffer" -nodeType "mentalrayOptions" -nodeType "mentalrayGlobals"
@@ -8,8 +8,8 @@ requires -nodeType "mentalrayFramebuffer" -nodeType "mentalrayOptions" -nodeType
 requires -nodeType "ilrOptionsNode" -nodeType "ilrUIOptionsNode" -nodeType "ilrBakeLayerManager"
 		 -nodeType "ilrBakeLayer" "Turtle" "2015.0.0";
 requires "sqtVelvetShader" "2.3";
-requires "nwPitNodes" "2";
 requires "rpmaya" "2.0";
+requires "nwPitNodes" "2";
 requires "nwLightingTools" "2012_03_13_1604";
 requires "n_locator" "1.0";
 requires "hairAndFur" "2.8";
@@ -149,7 +149,8 @@ createNode transform -n "face_facial_ctl" -p "fac_ctl_main_Grp";
 	addAttr -ci true -sn "l_cnr_upRt" -ln "l_cnr_upRt" -min 0 -max 1 -at "double";
 	addAttr -ci true -sn "l_cnr_dnLt" -ln "l_cnr_dnLt" -min 0 -max 1 -at "double";
 	setAttr -k off ".v";
-	setAttr ".t" -type "double3" 44.002065613271952 -127.99687918181647 2.7720296871393679 ;
+	setAttr ".t" -type "double3" 44.002065613271952 -139.79605267301946 2.7720296871393688 ;
+	setAttr ".s" -type "double3" 0.1 0.1 0.1 ;
 	setAttr ".rp" -type "double3" -6.3131023247701306 9.2433253823394494 -0.082184452872649971 ;
 	setAttr ".sp" -type "double3" -6.3131023247701306 9.2433253823394494 -0.082184452872649971 ;
 createNode nurbsCurve -n "curveShape2" -p "face_facial_ctl";
@@ -40115,138 +40116,6 @@ createNode nurbsCurve -n "face_l_halfeyesquint_hlpShape" -p "|face_facial_ctl_Gr
 		-0.94099522630869004 34.231597964796329 5.055282232003967e-015
 		-0.94099522630869004 33.221142066809044 5.2800542938201697e-015
 		;
-createNode transform -n "face_r_halfeyesquint_fac_ctl_Grp11" -p "face_phonems_text";
-	setAttr ".v" no;
-	setAttr ".t" -type "double3" -49.670114691646894 8.8721309255052692 0.094723018409312951 ;
-	setAttr ".r" -type "double3" 180 0 90.000000000000014 ;
-	setAttr ".s" -type "double3" 0.81944411400382433 1.178495996387209 -0.81944411400382533 ;
-	setAttr ".rp" -type "double3" -0.75167695482471153 37.206628112429613 -2.0614443708053728e-015 ;
-	setAttr ".rpt" -type "double3" 37.958305067254322 -37.958305067254315 8.6793865441060311e-015 ;
-	setAttr ".sp" -type "double3" -0.91730106053480476 31.571280875361516 2.5156619415241163e-015 ;
-	setAttr ".spt" -type "double3" 0.16562410571009337 5.6353472370680917 -4.5771063123294879e-015 ;
-createNode transform -n "face_Smile2_fac_ctl" -p "face_r_halfeyesquint_fac_ctl_Grp11";
-	setAttr -l on -k off ".v";
-	setAttr ".ove" yes;
-	setAttr -l on -k off ".tx";
-	setAttr -l on -k off ".tz";
-	setAttr -l on -k off ".rx";
-	setAttr -l on -k off ".ry";
-	setAttr -l on -k off ".rz";
-	setAttr -l on -k off ".sx";
-	setAttr -l on -k off ".sy";
-	setAttr -l on -k off ".sz";
-	setAttr ".rp" -type "double3" -0.91730106053480831 31.087326840127886 -4.4408920985006246e-015 ;
-	setAttr ".sp" -type "double3" -0.91730106053480831 31.087326840127886 -4.4408920985006246e-015 ;
-	setAttr ".mntl" -type "double3" 0 0 0 ;
-	setAttr ".mxtl" -type "double3" 0 1 0 ;
-	setAttr ".mtye" yes;
-	setAttr ".xtxe" yes;
-	setAttr ".xtye" yes;
-	setAttr ".xtze" yes;
-	setAttr ".hdl" -type "double3" -26.086449982768674 24.612380876295816 0 ;
-createNode nurbsCurve -n "face_Smile2_fac_ctlShape" -p "|face_facial_ctl_Grp|fac_ctl_main_Grp|face_facial_ctl|Facial_Global_gro|newGUI|face_phonems_text|face_r_halfeyesquint_fac_ctl_Grp11|face_Smile2_fac_ctl";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 1;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 4 2 no 3
-		5 0 0.25 0.5 0.75 1
-		5
-		-0.76012612711940997 31.04009955320851 -4.4408920985006246e-015
-		-1.0744759939502067 31.04009955320851 -4.4408920985006246e-015
-		-1.0744759939502067 31.134554127047263 -4.4408920985006246e-015
-		-0.76012612711940997 31.134554127047263 -4.4408920985006246e-015
-		-0.76012612711940997 31.04009955320851 -4.4408920985006246e-015
-		;
-createNode transform -n "face_l_halfeyesquint_hlp" -p "face_r_halfeyesquint_fac_ctl_Grp11";
-	setAttr ".tmp" yes;
-	setAttr ".ove" yes;
-	setAttr ".t" -type "double3" -7.1054273576010019e-015 65.318924804924208 0 ;
-	setAttr ".r" -type "double3" 180 -9.3467740512391734e-016 -6.8444331983712429e-047 ;
-	setAttr ".s" -type "double3" 0.99999999999999989 0.99999999999999989 -1 ;
-	setAttr ".rp" -type "double3" -0.91720290406275029 33.093910985942678 0 ;
-	setAttr ".rpt" -type "double3" 0 -66.187821971885356 4.0528352160202132e-015 ;
-	setAttr ".sp" -type "double3" -0.91720290406275051 33.093910985942685 0 ;
-	setAttr ".spt" -type "double3" 2.2204460492503126e-016 -7.1054273576010011e-015 
-		0 ;
-createNode nurbsCurve -n "face_l_halfeyesquint_hlpShape" -p "|face_facial_ctl_Grp|fac_ctl_main_Grp|face_facial_ctl|Facial_Global_gro|newGUI|face_phonems_text|face_r_halfeyesquint_fac_ctl_Grp11|face_l_halfeyesquint_hlp";
-	setAttr -k off ".v";
-	setAttr ".cc" -type "nurbsCurve" 
-		1 4 0 no 3
-		5 0 1 2 3 4
-		5
-		-0.94099522630869004 33.221142066809044 5.2800542938201697e-015
-		-0.89360689476090827 33.221142066809044 5.2800542938201697e-015
-		-0.89360689476090827 34.231597964796329 5.055282232003967e-015
-		-0.94099522630869004 34.231597964796329 5.055282232003967e-015
-		-0.94099522630869004 33.221142066809044 5.2800542938201697e-015
-		;
-createNode transform -n "face_r_halfeyesquint_fac_ctl_Grp12" -p "face_phonems_text";
-	setAttr ".v" no;
-	setAttr ".t" -type "double3" -49.680218468641037 10.485511238447767 0.094723018409317392 ;
-	setAttr ".r" -type "double3" 180 0 90.000000000000014 ;
-	setAttr ".s" -type "double3" 0.81944411400382433 1.178495996387209 -0.81944411400382533 ;
-	setAttr ".rp" -type "double3" -0.75167695482471153 37.206628112429613 -2.0614443708053728e-015 ;
-	setAttr ".rpt" -type "double3" 37.958305067254322 -37.958305067254315 8.6793865441060311e-015 ;
-	setAttr ".sp" -type "double3" -0.91730106053480476 31.571280875361516 2.5156619415241163e-015 ;
-	setAttr ".spt" -type "double3" 0.16562410571009337 5.6353472370680917 -4.5771063123294879e-015 ;
-createNode transform -n "face_Smile1_fac_ctl" -p "face_r_halfeyesquint_fac_ctl_Grp12";
-	setAttr -l on -k off ".v";
-	setAttr ".ove" yes;
-	setAttr -l on -k off ".tx";
-	setAttr -l on -k off ".tz";
-	setAttr -l on -k off ".rx";
-	setAttr -l on -k off ".ry";
-	setAttr -l on -k off ".rz";
-	setAttr -l on -k off ".sx";
-	setAttr -l on -k off ".sy";
-	setAttr -l on -k off ".sz";
-	setAttr ".rp" -type "double3" -0.91730106053479887 31.087326840127876 -4.2273491564786524e-015 ;
-	setAttr ".sp" -type "double3" -0.91730106053479887 31.087326840127876 -4.2273491564786524e-015 ;
-	setAttr ".mntl" -type "double3" 0 0 0 ;
-	setAttr ".mxtl" -type "double3" 0 1 0 ;
-	setAttr ".mtye" yes;
-	setAttr ".xtxe" yes;
-	setAttr ".xtye" yes;
-	setAttr ".xtze" yes;
-	setAttr ".hdl" -type "double3" -26.086449982768674 24.612380876295816 0 ;
-createNode nurbsCurve -n "face_Smile1_fac_ctlShape" -p "|face_facial_ctl_Grp|fac_ctl_main_Grp|face_facial_ctl|Facial_Global_gro|newGUI|face_phonems_text|face_r_halfeyesquint_fac_ctl_Grp12|face_Smile1_fac_ctl";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 1;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 4 2 no 3
-		5 0 0.25 0.5 0.75 1
-		5
-		-0.74920977923890586 31.037600300689071 -4.2273491564786524e-015
-		-1.0853923418306919 31.037600300689071 -4.2273491564786524e-015
-		-1.0853923418306919 31.13705337956668 -4.2273491564786524e-015
-		-0.74920977923890586 31.13705337956668 -4.2273491564786524e-015
-		-0.74920977923890586 31.037600300689071 -4.2273491564786524e-015
-		;
-createNode transform -n "face_l_halfeyesquint_hlp" -p "face_r_halfeyesquint_fac_ctl_Grp12";
-	setAttr ".tmp" yes;
-	setAttr ".ove" yes;
-	setAttr ".t" -type "double3" -7.1054273576010019e-015 65.318924804924208 0 ;
-	setAttr ".r" -type "double3" 180 -9.3467740512391734e-016 -6.8444331983712429e-047 ;
-	setAttr ".s" -type "double3" 0.99999999999999989 0.99999999999999989 -1 ;
-	setAttr ".rp" -type "double3" -0.91720290406275029 33.093910985942678 0 ;
-	setAttr ".rpt" -type "double3" 0 -66.187821971885356 4.0528352160202132e-015 ;
-	setAttr ".sp" -type "double3" -0.91720290406275051 33.093910985942685 0 ;
-	setAttr ".spt" -type "double3" 2.2204460492503126e-016 -7.1054273576010011e-015 
-		0 ;
-createNode nurbsCurve -n "face_l_halfeyesquint_hlpShape" -p "|face_facial_ctl_Grp|fac_ctl_main_Grp|face_facial_ctl|Facial_Global_gro|newGUI|face_phonems_text|face_r_halfeyesquint_fac_ctl_Grp12|face_l_halfeyesquint_hlp";
-	setAttr -k off ".v";
-	setAttr ".cc" -type "nurbsCurve" 
-		1 4 0 no 3
-		5 0 1 2 3 4
-		5
-		-0.94099522630869004 33.221142066809044 5.2800542938201697e-015
-		-0.89360689476090827 33.221142066809044 5.2800542938201697e-015
-		-0.89360689476090827 34.231597964796329 5.055282232003967e-015
-		-0.94099522630869004 34.231597964796329 5.055282232003967e-015
-		-0.94099522630869004 33.221142066809044 5.2800542938201697e-015
-		;
 createNode transform -n "face_Trim_Text_Smilex_2_1" -p "face_phonems_text";
 	setAttr ".v" no;
 	setAttr ".t" -type "double3" -14.38059580472715 8.0496013768834977 0.095000000000000293 ;
@@ -47547,7 +47416,7 @@ createNode transform -n "face_Smile1_fac_ctl" -p "face_r_halfeyesquint_fac_ctl_G
 	setAttr ".xtye" yes;
 	setAttr ".xtze" yes;
 	setAttr ".hdl" -type "double3" -26.086449982768674 24.612380876295816 0 ;
-createNode nurbsCurve -n "face_Smile1_fac_ctlShape" -p "|face_facial_ctl_Grp|fac_ctl_main_Grp|face_facial_ctl|Facial_Global_gro|newGUI|face_phonems_text|face_r_halfeyesquint_fac_ctl_Grp15|face_Smile1_fac_ctl";
+createNode nurbsCurve -n "face_Smile1_fac_ctlShape" -p "face_Smile1_fac_ctl";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 1;
@@ -47612,7 +47481,7 @@ createNode transform -n "face_Smile2_fac_ctl" -p "face_r_halfeyesquint_fac_ctl_G
 	setAttr ".xtye" yes;
 	setAttr ".xtze" yes;
 	setAttr ".hdl" -type "double3" -26.086449982768674 24.612380876295816 0 ;
-createNode nurbsCurve -n "face_Smile2_fac_ctlShape" -p "|face_facial_ctl_Grp|fac_ctl_main_Grp|face_facial_ctl|Facial_Global_gro|newGUI|face_phonems_text|face_r_halfeyesquint_fac_ctl_Grp16|face_Smile2_fac_ctl";
+createNode nurbsCurve -n "face_Smile2_fac_ctlShape" -p "face_Smile2_fac_ctl";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 1;
@@ -49881,12 +49750,12 @@ createNode nurbsCurve -n "face_r_lower_eyelid_fac_ctlShape" -p "face_r_lower_eye
 		;
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 21.128822860294921 1.0010228574939593 69.700139227239035 ;
-	setAttr ".r" -type "double3" -0.93835272965354155 5.3999999999981911 0 ;
+	setAttr ".t" -type "double3" 27.685683730473752 -14.776688070325353 163.52598827160361 ;
+	setAttr ".r" -type "double3" 5.0616472703464606 4.9999999999981997 -2.4942999090972114e-017 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999993;
-	setAttr ".coi" 68.400770786537834;
+	setAttr ".coi" 163.08998968601932;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -50954,10 +50823,8 @@ connectAttr "face_upr_teeth_clench_fac_ctl.ty" "face_facial_ctl.upr_teeth_clench
 		;
 connectAttr "face_l_cheek_puff_fac_ctl.ty" "face_facial_ctl.l_cheek_puff";
 connectAttr "face_mouthopen_fac_ctl.ty" "face_facial_ctl.mouthopen";
-connectAttr "|face_facial_ctl_Grp|fac_ctl_main_Grp|face_facial_ctl|Facial_Global_gro|newGUI|face_phonems_text|face_r_halfeyesquint_fac_ctl_Grp12|face_Smile1_fac_ctl.ty" "face_facial_ctl.Smile1"
-		;
-connectAttr "|face_facial_ctl_Grp|fac_ctl_main_Grp|face_facial_ctl|Facial_Global_gro|newGUI|face_phonems_text|face_r_halfeyesquint_fac_ctl_Grp11|face_Smile2_fac_ctl.ty" "face_facial_ctl.Smile2"
-		;
+connectAttr "face_Smile1_fac_ctl.ty" "face_facial_ctl.Smile1";
+connectAttr "face_Smile2_fac_ctl.ty" "face_facial_ctl.Smile2";
 connectAttr "face_r_cheek_puff_fac_ctl.ty" "face_facial_ctl.r_cheek_puff";
 connectAttr "face_facial_ctl_l_eyesquint_yPlus.o" "face_facial_ctl.l_eyesquint_yPlus"
 		;
@@ -51328,19 +51195,15 @@ connectAttr "Char_x_6.msg" "hyperLayout1.hyp[63].dn";
 connectAttr "curve178.msg" "hyperLayout1.hyp[64].dn";
 connectAttr "curveShape181.msg" "hyperLayout1.hyp[65].dn";
 connectAttr "face_r_halfeyesquint_fac_ctl_Grp15.msg" "hyperLayout1.hyp[66].dn";
-connectAttr "|face_facial_ctl_Grp|fac_ctl_main_Grp|face_facial_ctl|Facial_Global_gro|newGUI|face_phonems_text|face_r_halfeyesquint_fac_ctl_Grp15|face_Smile1_fac_ctl.msg" "hyperLayout1.hyp[67].dn"
-		;
-connectAttr "|face_facial_ctl_Grp|fac_ctl_main_Grp|face_facial_ctl|Facial_Global_gro|newGUI|face_phonems_text|face_r_halfeyesquint_fac_ctl_Grp15|face_Smile1_fac_ctl|face_Smile1_fac_ctlShape.msg" "hyperLayout1.hyp[68].dn"
-		;
+connectAttr "face_Smile1_fac_ctl.msg" "hyperLayout1.hyp[67].dn";
+connectAttr "face_Smile1_fac_ctlShape.msg" "hyperLayout1.hyp[68].dn";
 connectAttr "|face_facial_ctl_Grp|fac_ctl_main_Grp|face_facial_ctl|Facial_Global_gro|newGUI|face_phonems_text|face_r_halfeyesquint_fac_ctl_Grp15|face_l_halfeyesquint_hlp.msg" "hyperLayout1.hyp[69].dn"
 		;
 connectAttr "|face_facial_ctl_Grp|fac_ctl_main_Grp|face_facial_ctl|Facial_Global_gro|newGUI|face_phonems_text|face_r_halfeyesquint_fac_ctl_Grp15|face_l_halfeyesquint_hlp|face_l_halfeyesquint_hlpShape.msg" "hyperLayout1.hyp[70].dn"
 		;
 connectAttr "face_r_halfeyesquint_fac_ctl_Grp16.msg" "hyperLayout1.hyp[71].dn";
-connectAttr "|face_facial_ctl_Grp|fac_ctl_main_Grp|face_facial_ctl|Facial_Global_gro|newGUI|face_phonems_text|face_r_halfeyesquint_fac_ctl_Grp16|face_Smile2_fac_ctl.msg" "hyperLayout1.hyp[72].dn"
-		;
-connectAttr "|face_facial_ctl_Grp|fac_ctl_main_Grp|face_facial_ctl|Facial_Global_gro|newGUI|face_phonems_text|face_r_halfeyesquint_fac_ctl_Grp16|face_Smile2_fac_ctl|face_Smile2_fac_ctlShape.msg" "hyperLayout1.hyp[73].dn"
-		;
+connectAttr "face_Smile2_fac_ctl.msg" "hyperLayout1.hyp[72].dn";
+connectAttr "face_Smile2_fac_ctlShape.msg" "hyperLayout1.hyp[73].dn";
 connectAttr "|face_facial_ctl_Grp|fac_ctl_main_Grp|face_facial_ctl|Facial_Global_gro|newGUI|face_phonems_text|face_r_halfeyesquint_fac_ctl_Grp16|face_l_halfeyesquint_hlp.msg" "hyperLayout1.hyp[74].dn"
 		;
 connectAttr "|face_facial_ctl_Grp|fac_ctl_main_Grp|face_facial_ctl|Facial_Global_gro|newGUI|face_phonems_text|face_r_halfeyesquint_fac_ctl_Grp16|face_l_halfeyesquint_hlp|face_l_halfeyesquint_hlpShape.msg" "hyperLayout1.hyp[75].dn"
@@ -51415,26 +51278,26 @@ connectAttr "face_jaw_fac_ctl.ty" "face_facial_ctl_jaw_yMin.i";
 connectAttr "face_mouth_slide_fac_ctl.ty" "face_facial_ctl_mouth_slide_yMin.i";
 connectAttr "face_r_cnr_fac_ctl.ty" "face_facial_ctl_r_cnr_yMin.i";
 connectAttr "face_l_cnr_fac_ctl.ty" "face_facial_ctl_l_cnr_yMin.i";
-connectAttr "face_upr_teeth_clench_mov_fac_ctl.ty" "face_facial_ctl_upr_teeth_clench_mov_xPlus.i"
+connectAttr "face_upr_teeth_clench_mov_fac_ctl.tx" "face_facial_ctl_upr_teeth_clench_mov_xPlus.i"
 		;
-connectAttr "face_lwr_teeth_clench_mov_fac_ctl.ty" "face_facial_ctl_lwr_teeth_clench_mov_xPlus.i"
+connectAttr "face_lwr_teeth_clench_mov_fac_ctl.tx" "face_facial_ctl_lwr_teeth_clench_mov_xPlus.i"
 		;
-connectAttr "face_l_lip_pinch_fac_ctl.ty" "face_facial_ctl_l_lip_pinch_xPlus.i";
-connectAttr "face_r_lip_pinch_fac_ctl.ty" "face_facial_ctl_r_lip_pinch_xPlus.i";
-connectAttr "face_mouthbnk_fac_ctl.ty" "face_facial_ctl_mouthbnk_xPlus.i";
-connectAttr "face_mouth_slide_fac_ctl.ty" "face_facial_ctl_mouth_slide_xPlus.i";
-connectAttr "face_r_cnr_fac_ctl.ty" "face_facial_ctl_r_cnr_xPlus.i";
-connectAttr "face_l_cnr_fac_ctl.ty" "face_facial_ctl_l_cnr_xPlus.i";
-connectAttr "face_upr_teeth_clench_mov_fac_ctl.ty" "face_facial_ctl_upr_teeth_clench_mov_xMin.i"
+connectAttr "face_l_lip_pinch_fac_ctl.tx" "face_facial_ctl_l_lip_pinch_xPlus.i";
+connectAttr "face_r_lip_pinch_fac_ctl.tx" "face_facial_ctl_r_lip_pinch_xPlus.i";
+connectAttr "face_mouthbnk_fac_ctl.tx" "face_facial_ctl_mouthbnk_xPlus.i";
+connectAttr "face_mouth_slide_fac_ctl.tx" "face_facial_ctl_mouth_slide_xPlus.i";
+connectAttr "face_r_cnr_fac_ctl.tx" "face_facial_ctl_r_cnr_xPlus.i";
+connectAttr "face_l_cnr_fac_ctl.tx" "face_facial_ctl_l_cnr_xPlus.i";
+connectAttr "face_upr_teeth_clench_mov_fac_ctl.tx" "face_facial_ctl_upr_teeth_clench_mov_xMin.i"
 		;
-connectAttr "face_lwr_teeth_clench_mov_fac_ctl.ty" "face_facial_ctl_lwr_teeth_clench_mov_xMin.i"
+connectAttr "face_lwr_teeth_clench_mov_fac_ctl.tx" "face_facial_ctl_lwr_teeth_clench_mov_xMin.i"
 		;
-connectAttr "face_l_lip_pinch_fac_ctl.ty" "face_facial_ctl_l_lip_pinch_xMin.i";
-connectAttr "face_r_lip_pinch_fac_ctl.ty" "face_facial_ctl_r_lip_pinch_xMin.i";
-connectAttr "face_mouthbnk_fac_ctl.ty" "face_facial_ctl_mouthbnk_xMin.i";
-connectAttr "face_mouth_slide_fac_ctl.ty" "face_facial_ctl_mouth_slide_xMin.i";
-connectAttr "face_r_cnr_fac_ctl.ty" "face_facial_ctl_r_cnr_xMin.i";
-connectAttr "face_l_cnr_fac_ctl.ty" "face_facial_ctl_l_cnr_xMin.i";
+connectAttr "face_l_lip_pinch_fac_ctl.tx" "face_facial_ctl_l_lip_pinch_xMin.i";
+connectAttr "face_r_lip_pinch_fac_ctl.tx" "face_facial_ctl_r_lip_pinch_xMin.i";
+connectAttr "face_mouthbnk_fac_ctl.tx" "face_facial_ctl_mouthbnk_xMin.i";
+connectAttr "face_mouth_slide_fac_ctl.tx" "face_facial_ctl_mouth_slide_xMin.i";
+connectAttr "face_r_cnr_fac_ctl.tx" "face_facial_ctl_r_cnr_xMin.i";
+connectAttr "face_l_cnr_fac_ctl.tx" "face_facial_ctl_l_cnr_xMin.i";
 connectAttr "face_mouth_slide_fac_ctl.t" "upLtDB_face_mouth_slide_fac_ctl_Corrective.p1"
 		;
 connectAttr "upLtLoc_face_mouth_slide_fac_ctl_Corrrective.t" "upLtDB_face_mouth_slide_fac_ctl_Corrective.p2"
