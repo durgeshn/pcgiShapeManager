@@ -66,7 +66,8 @@ def addBlendShapeNodes(baseMesh, shapeList=list()):
     Returns:
 
     """
-    return pm.blendShape(shapeList, baseMesh, n='%s_blendShapeNode' % baseMesh)[0]
+    print shapeList
+    return pm.blendShape(shapeList, baseMesh, n='%s_blendShapeNode' % baseMesh, tc=0)[0]
 
 
 def addIntermidiateBlendShapes(blendShapeNode, baseMesh, mainShape, intermidiatePattern, intermidiateShapeList=list()):
@@ -77,7 +78,7 @@ def addIntermidiateBlendShapes(blendShapeNode, baseMesh, mainShape, intermidiate
     """
     blendShapeNode = pm.PyNode(blendShapeNode)
     weightCount = len(blendShapeNode.listAttr(m=True, k=True)) - 1
-    pm.blendShape(blendShapeNode, e=1, t=(baseMesh, weightCount, mainShape, 1))
+    pm.blendShape(blendShapeNode,tc=0, e=1, t=(baseMesh, weightCount, mainShape, 1))
     for each in intermidiateShapeList:
         ret = decompileNames(each, intermidiatePattern)
-        pm.blendShape(blendShapeNode, e=1, ib=1, t=(baseMesh, weightCount, each, float(ret[1]['#value']) / 100))
+        pm.blendShape(blendShapeNode, e=1, ib=1, t=(baseMesh, weightCount, each, float(ret[1]['#value']) / 100), tc=0)
